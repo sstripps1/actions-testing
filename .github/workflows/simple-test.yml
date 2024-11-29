@@ -26,7 +26,7 @@ jobs:
         shell: bash
         if: github.event.action != 'closed'
         run: |
-          de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y --debug
+          de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
           DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
