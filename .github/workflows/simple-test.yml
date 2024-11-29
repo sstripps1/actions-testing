@@ -28,6 +28,6 @@ jobs:
         run: |
           de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y
         env:
-          DE_PASSWORD: ${{secrets.DE_PASSWORD}}
-          DE: ${{secrets.DE_USERNAME}}
+          DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
+          DASH_ENTERPRISE_USERNAME: ${{secrets.DASH_ENTERPRISE_USERNAME}}
           APP_NAME: ${{secrets.APP_NAME}}
