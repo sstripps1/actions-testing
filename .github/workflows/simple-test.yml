@@ -27,7 +27,6 @@ jobs:
         if: github.event.action != 'closed'
         run: |
           de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y
-        fi
         env:
           DE_PASSWORD: ${{secrets.DE_PASSWORD}}
           DE: ${{secrets.DE_USERNAME}}
