@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: |
           python -m pip install --upgrade pip
-          pip install de-client --extra-index-url=https://$DE_HOST/packages
+          pip install de-client --extra-index-url=https://$DASH_ENTERPRISE_HOST/packages
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
       - name: Inject code and deploy
