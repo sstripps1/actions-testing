@@ -21,13 +21,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install de-client --extra-index-url=https://$DASH_ENTERPRISE_HOST/packages
           fi
+        env:
+          DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
       - name: Inject code and deploy
         shell: bash
         if: github.event.action != 'closed'
         run: |
           de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y
         env:
-          DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
           DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
           DASH_ENTERPRISE_USERNAME: ${{secrets.DASH_ENTERPRISE_USERNAME}}
           APP_NAME: ${{secrets.APP_NAME}}
