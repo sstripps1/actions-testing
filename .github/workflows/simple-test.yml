@@ -20,7 +20,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install de-client --extra-index-url=https://$DE_HOST/packages
-          fi
         env:
           DE_HOST: ${{secrets.DE_HOST}}
       - name: Inject code and deploy
@@ -28,6 +27,7 @@ jobs:
         if: github.event.action != 'closed'
         run: |
           de --no-keyfile deploy --name $APP_NAME --message "Deploying app" -y
+        fi
         env:
           DE_PASSWORD: ${{secrets.DE_PASSWORD}}
           DE: ${{secrets.DE_USERNAME}}
