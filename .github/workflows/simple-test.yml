@@ -4,13 +4,17 @@ name: Test workflow
 # Runs on push to main
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -22,9 +26,6 @@ jobs:
           pip install de-client --extra-index-url=https://$DASH_ENTERPRISE_HOST/packages
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Inject code and deploy
         shell: bash
         if: github.event.action != 'closed'
@@ -37,3 +38,4 @@ jobs:
           DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
           DASH_ENTERPRISE_USERNAME: ${{secrets.DASH_ENTERPRISE_USERNAME}}
           APP_NAME: ${{secrets.APP_NAME}}
+          
