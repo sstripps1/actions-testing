@@ -33,7 +33,7 @@ jobs:
         if: github.event.action != 'closed'
         run: |
           ls ${{ github.workspace }}
-          # DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --host $DASH_ENTERPRISE_HOST --no-keyfile login
+          DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --host $DASH_ENTERPRISE_HOST --no-keyfile login
           DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --no-keyfile deploy ${{ github.workspace }} --name $APP_NAME --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
