@@ -1,10 +1,13 @@
-# This is a basic GitHub Actions workflow for https deployments
-name: CI https
+name: Test workflow
 
 # Controls when the workflow will run
+# Runs on push to main
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -14,17 +17,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Prod Deploy
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      - name: Install de-client
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install de-client --extra-index-url=https://$DASH_ENTERPRISE_HOST/packages
+        env:
+          DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
+      - name: Inject code and deploy
+        shell: bash
+        if: github.event.action != 'closed'
         run: |
           ls ${{ github.workspace }}
-          # printf '#!/bin/bash\necho username=$DASH_ENTERPRISE_USERNAME\necho password=$DASH_ENTERPRISE_PASSWORD' >> helper-script.sh
-          # git config credential.helper "/bin/bash $(pwd)/helper-script.sh"
-          # git config protocol.version 0
-
-          # git remote rm origin 2>/dev/null || true
-          # git remote add "plotly" "https://$DASH_ENTERPRISE_HOST/GIT/$APP_NAME"
-
-          # git push --force plotly HEAD:refs/heads/main
+          # DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --host $DASH_ENTERPRISE_HOST --no-keyfile login
+          DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --no-keyfile deploy ${{ github.workspace }} --name $APP_NAME --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
           DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
