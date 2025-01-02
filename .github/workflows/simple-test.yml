@@ -32,12 +32,9 @@ jobs:
         shell: bash
         if: github.event.action != 'closed'
         run: |
-          DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --host $DASH_ENTERPRISE_HOST --no-keyfile login
-          de whoami
-          DASH_ENTERPRISE_USERNAME=$DASH_ENTERPRISE_USERNAME DASH_ENTERPRISE_PASSWORD=$DASH_ENTERPRISE_PASSWORD de --host $DASH_ENTERPRISE_HOST --no-keyfile deploy ${{ github.workspace }} --name $APP_NAME --message "Deploying app" -y
+          de --no-keyfile deploy ${{ github.workspace }} --name "actions-testing" --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
           DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
           DASH_ENTERPRISE_USERNAME: ${{secrets.DASH_ENTERPRISE_USERNAME}}
-          APP_NAME: ${{secrets.APP_NAME}}
           
