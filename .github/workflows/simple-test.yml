@@ -35,6 +35,6 @@ jobs:
           de --no-keyfile deploy --name "actions-testing" --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
-          DASH_ENTERPRISE_PASSWORD: "\#SpecialChars\!"
+          DASH_ENTERPRISE_PASSWORD: ${{secrets.DASH_ENTERPRISE_PASSWORD}}
           DASH_ENTERPRISE_USERNAME: ${{secrets.DASH_ENTERPRISE_USERNAME}}
           
