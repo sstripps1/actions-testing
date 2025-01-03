@@ -32,7 +32,7 @@ jobs:
         shell: bash
         if: github.event.action != 'closed'
         run: |
-          DASH_ENTERPRISE_PASSWORD=$(echo "$DASH_ENTERPRISE_PASSWORD_ENCODED" | base64 --decode)
+          DASH_ENTERPRISE_PASSWORD=$(echo "$DASH_ENTERPRISE_PASSWORD_ENCODED" | tr -d '\n' | base64 --decode)
           de --no-keyfile deploy --name "actions-testing" --message "Deploying app" -y
         env:
           DASH_ENTERPRISE_HOST: ${{secrets.DASH_ENTERPRISE_HOST}}
