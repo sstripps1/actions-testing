@@ -4,6 +4,7 @@ import plotly.express as px
 
 app = Dash(__name__)
 server = app.server  # expose server variable for Procfile
+# Comment to trigger deploy
 
 controls = [
     ddk.ControlItem(
